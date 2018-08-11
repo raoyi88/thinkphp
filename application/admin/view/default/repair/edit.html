@@ -1,0 +1,49 @@
+{extend name="public/base" /}
+
+{block name="body"}
+    <h2>编辑报修信息</h2>
+<form action="{:url('update')}" method="post" class="form-horizontal">
+    <div class="form-item">
+        <label class="item-label">报修简介<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="text" class="text input-large" name="title" value="{$repair.title}">
+        </div>
+    </div>
+            <input type="hidden" class="text input-large" name="id" value="{$repair.id}">
+    <div class="form-item">
+        <label class="item-label">姓名<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="text" class="text input-large" name="name" value="{$repair.name}">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">电话<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="tel" class="text input-large" name="tel" value="{$repair.tel}">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">时间<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="date" class="text input-large" name="time" value="{$repair.create_time|date='Y-m-d',###}">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">地点<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="text" class="text input-large" name="address" value="{$repair.address}">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">详情<span class="check-tips"></span></label>
+        <div class="controls">
+            <textarea name="content" id="" cols="30" rows="10">{$repair.content}</textarea>
+        </div>
+    </div>
+    <div class="form-item">
+        <button class="btn submit-btn ajax-posts" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+        <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+    </div>
+</form>
+{/block}
+{/block}

@@ -1,0 +1,43 @@
+{extend name="public/base" /}
+
+{block name="body"}
+<h2>编辑活动信息</h2>
+<form action="{:url('update')}" method="post" class="form-horizontal">
+    <div class="form-item">
+        <label class="item-label">活动简介<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="text" class="text input-large" name="title" value="{$activity.title}">
+        </div>
+    </div>
+    <input type="hidden" class="text input-large" name="id" value="{$activity.id}">
+    <div class="form-item">
+        <label class="item-label">详情<span class="check-tips"></span></label>
+        <div class="controls">
+            <textarea name="content" class="textarea" cols="30" style="width: 390px" rows="10">{$activity.content}</textarea>
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">开始时间<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="date" class="text input-large" name="start_time" value="{$activity.start_time|date='Y-m-d',###}">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">结束时间<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="date" class="text input-large" name="end_time" value="{$activity.end_time|date='Y-m-d',###}">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">人数<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="number" class="text input-large" name="num" value="{$activity.num}">
+        </div>
+    </div>
+    <div class="form-item">
+        <button class="btn submit-btn ajax-posts" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+        <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+    </div>
+</form>
+{/block}
+{/block}
