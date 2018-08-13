@@ -24,8 +24,7 @@ class Article extends Home {
 	}
 	/* 文档模型列表页 */
 	public function lists($p = 1){
-
-		/* 分类信息 */
+        /* 分类信息 */
 		$category = $this->category();
 		/* 获取当前分类列表 */
 		$Document = new Document();

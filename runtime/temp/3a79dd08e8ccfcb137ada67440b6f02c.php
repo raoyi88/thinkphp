@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:85:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/activity\index.html";i:1533957442;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/addons\hooks.html";i:1496373782;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -100,52 +100,48 @@
             
 
             
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>钩子列表</h2>
+	</div>
+	<div class="cf">
+		<?php if (IS_ROOT): ?>
+			<a class="btn" href="<?php echo url('addhook'); ?>">新 增</a>
+		<?php endif ?>
+	</div>
 
-<div class="main-title">
-    <h2>活动管理</h2>
-</div>
-
-<div class="cf">
-    <a class="btn" href="<?php echo url('create'); ?>">新 增</a>
-    <button class="btn ajax-post confirm" url="<?php echo url('deleterepairs'); ?>" target-form="ids">删 除</button>
-</div>
-
-<div class="data-table table-striped">
-    <table>
-        <thead>
-        <tr>
-            <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-            <th>ID</th>
-            <th>活动标题</th>
-            <th>开始时间</th>
-            <th>结束时间</th>
-            <th>限制人数</th>
-            <th>状态</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if(!(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty()))): if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?>
-        <tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo $list['id']; ?>" /></td>
-            <td><?php echo $list['id']; ?></td>
-            <td><?php echo $list['title']; ?></td>
-            <td><?php echo date('Y-m-d',$list['start_time']); ?></td>
-            <td><?php echo date('Y-m-d',$list['end_time']); ?></td>
-            <td><?php echo $list['num']; ?></td>
-            <td><a href="<?php echo url('changestatus?id='.$list['id']); ?>"><?php echo isset($list['status']) ? $list['status'] : 0?"已发布":"未发布"; ?></a></td>
-            <td>
-                <a href="<?php echo url('show?id='.$list['id']); ?>">查看</a>
-                <a href="<?php echo url('edit?id='.$list['id']); ?>">编辑</a>
-                <a href="<?php echo url('destroy?id='.$list['id']); ?>">删除</a>
-            </td>
-        </tr>
-        <?php endforeach; endif; else: echo "" ;endif; else: ?>
-        <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
-        <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+	<!-- 数据列表 -->
+	<div class="data-table table-striped">
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>名称</th>
+					<th>描述</th>
+					<th>类型</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+					<tr>
+						<td><?php echo $vo['id']; ?></td>
+						<td><a href="<?php echo url('edithook?id='.$vo['id']); ?>"><?php echo $vo['name']; ?></a></td>
+						<td><?php echo $vo['description']; ?></td>
+						<td><?php echo $vo['type_text']; ?></td>
+						<td>
+							<a title="编辑" href="<?php echo url('edithook?id='.$vo['id']); ?>">编辑</a>
+							<a class="confirm ajax-gets" title="删除" href="<?php echo url('delhook?id='.$vo['id']); ?>">删除</a>
+						</td>
+					</tr>
+				<?php endforeach; endif; else: echo "" ;endif; ?>
+			</tbody>
+		</table>        
+	</div>
+	<!-- 分页 -->
+    <div class="page">
+        <?php echo $_page; ?>
+    </div>
 
         </div>
         <div class="cont-ft">
@@ -243,5 +239,11 @@
         }
     </script>
     
+	<script type="text/javascript">
+		$(function(){
+
+		})
+	</script>
+
 </body>
 </html>

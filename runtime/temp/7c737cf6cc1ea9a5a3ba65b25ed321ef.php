@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:85:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/activity\index.html";i:1533957442;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/zushou\index.html";i:1534046193;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -116,11 +116,13 @@
         <tr>
             <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
             <th>ID</th>
-            <th>活动标题</th>
-            <th>开始时间</th>
-            <th>结束时间</th>
-            <th>限制人数</th>
-            <th>状态</th>
+            <th>简介标题</th>
+            <th>价格</th>
+            <th>图片</th>
+            <th>联系电话</th>
+            <th>所属类别</th>
+            <th>发布时间</th>
+            <th>房源状态</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -130,10 +132,12 @@
             <td><input class="ids" type="checkbox" name="id[]" value="<?php echo $list['id']; ?>" /></td>
             <td><?php echo $list['id']; ?></td>
             <td><?php echo $list['title']; ?></td>
-            <td><?php echo date('Y-m-d',$list['start_time']); ?></td>
-            <td><?php echo date('Y-m-d',$list['end_time']); ?></td>
-            <td><?php echo $list['num']; ?></td>
-            <td><a href="<?php echo url('changestatus?id='.$list['id']); ?>"><?php echo isset($list['status']) ? $list['status'] : 0?"已发布":"未发布"; ?></a></td>
+            <td><?php echo $list['price']; ?></td>
+            <td><img src="<?php echo $list['img']; ?>" style="width: 100px"></td>
+            <td><?php echo $list['tel']; ?></td>
+            <td><?php echo !empty($list['category'])?"出售":"出租"; ?></td>
+            <td><?php echo date('Y-m-d H:i:s',$list['create_time']); ?></td>
+            <td><?php echo isset($list['status']) ? $list['status'] : 0?"已租售":"正在租售"; ?></td>
             <td>
                 <a href="<?php echo url('show?id='.$list['id']); ?>">查看</a>
                 <a href="<?php echo url('edit?id='.$list['id']); ?>">编辑</a>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:81:"D:\phpStudy\WWW\thinkphp\public/../application/home/view/default/index\index.html";i:1533869338;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:81:"D:\phpStudy\WWW\thinkphp\public/../application/home/view/default/index\index.html";i:1534124674;}*/ ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Bootstrap 101 Template</title>
-
     <!-- Bootstrap -->
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
@@ -29,16 +28,16 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid text-center">
         <div class="col-xs-3">
-            <p class="navbar-text"><a href="index.html" class="navbar-link">首页</a></p>
+            <p class="navbar-text"><a href="<?php echo url('home/index'); ?>" class="navbar-link">首页</a></p>
         </div>
         <div class="col-xs-3">
-            <p class="navbar-text"><a href="fuwu.html" class="navbar-link">服务</a></p>
+            <p class="navbar-text"><a href="<?php echo url('activity/fuwu'); ?>" class="navbar-link">服务</a></p>
         </div>
         <div class="col-xs-3">
             <p class="navbar-text"><a href="faxian.html" class="navbar-link">发现</a></p>
         </div>
         <div class="col-xs-3">
-            <p class="navbar-text"><a href="my.html" class="navbar-link">我的</a></p>
+            <p class="navbar-text"><a href="<?php echo url('activity/my'); ?>" class="navbar-link">我的</a></p>
         </div>
     </div>
 </nav>
@@ -76,7 +75,7 @@
                     </a>
                 </div>
                 <div class="col-xs-4">
-                    <a href="notice.html">
+                    <a href="<?php echo url('activity/index'); ?>?category=0">
                     <div class="indexLabel label-success">
                     <span class="glyphicon glyphicon-briefcase"></span><br/>
                     商家活动
@@ -84,7 +83,7 @@
                     </a>
                 </div>
                 <div class="col-xs-4">
-                    <a href="zushou.html">
+                    <a href="<?php echo url('zushou/index'); ?>?category=0">
                     <div class="indexLabel label-primary">
                     <span class="glyphicon glyphicon-usd"></span><br/>
                     小区租售
@@ -92,7 +91,7 @@
                     </a>
                 </div>
                 <div class="col-xs-4">
-                    <a href="notice.html">
+                    <a href="<?php echo url('activity/index'); ?>?category=1">
                     <div class="indexLabel label-default">
                         <span class="glyphicon glyphicon-apple"></span><br/>
                         小区活动

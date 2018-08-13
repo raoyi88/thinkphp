@@ -3,6 +3,7 @@
 namespace app\home\controller;
 
 use think\Controller;
+use think\Db;
 use think\Request;
 
 class Repair extends Home
@@ -10,6 +11,11 @@ class Repair extends Home
     //加载视图
     public function index()
     {
+        $id=is_login();
+        $member=Db::table('twothink_renzheng')->where('member_id',$id)->find();
+        if ($member['status']==0){
+            $this->error('您的账号还没有通过认证','renzheng/index');
+        }
         return $this->fetch();
     }
 

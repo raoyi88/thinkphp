@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:85:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/activity\index.html";i:1533957442;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:93:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/auth_manager\editgroup.html";i:1496373782;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -100,52 +100,30 @@
             
 
             
+	<div class="main-title">
+		<h2><?php echo !empty($auth_group['id'])?'编辑':'新增'; ?>用户组</h2>
+	</div>
 
-<div class="main-title">
-    <h2>活动管理</h2>
-</div>
-
-<div class="cf">
-    <a class="btn" href="<?php echo url('create'); ?>">新 增</a>
-    <button class="btn ajax-post confirm" url="<?php echo url('deleterepairs'); ?>" target-form="ids">删 除</button>
-</div>
-
-<div class="data-table table-striped">
-    <table>
-        <thead>
-        <tr>
-            <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-            <th>ID</th>
-            <th>活动标题</th>
-            <th>开始时间</th>
-            <th>结束时间</th>
-            <th>限制人数</th>
-            <th>状态</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if(!(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty()))): if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?>
-        <tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo $list['id']; ?>" /></td>
-            <td><?php echo $list['id']; ?></td>
-            <td><?php echo $list['title']; ?></td>
-            <td><?php echo date('Y-m-d',$list['start_time']); ?></td>
-            <td><?php echo date('Y-m-d',$list['end_time']); ?></td>
-            <td><?php echo $list['num']; ?></td>
-            <td><a href="<?php echo url('changestatus?id='.$list['id']); ?>"><?php echo isset($list['status']) ? $list['status'] : 0?"已发布":"未发布"; ?></a></td>
-            <td>
-                <a href="<?php echo url('show?id='.$list['id']); ?>">查看</a>
-                <a href="<?php echo url('edit?id='.$list['id']); ?>">编辑</a>
-                <a href="<?php echo url('destroy?id='.$list['id']); ?>">删除</a>
-            </td>
-        </tr>
-        <?php endforeach; endif; else: echo "" ;endif; else: ?>
-        <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
-        <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+    <form action="<?php echo url('AuthManager/writeGroup'); ?>" enctype="application/x-www-form-urlencoded" method="POST"
+            class="form-horizontal">
+        <div class="form-item">
+            <label for="auth-title" class="item-label">用户组</label>
+            <div class="controls">
+                <input id="auth-title" type="text" name="title" class="text input-large" value="<?php echo $auth_group['title']; ?>"/>
+            </div>
+        </div>
+        <div class="form-item">
+            <label for="auth-description" class="item-label">描述</label>
+            <div class="controls">
+                <label class="textarea input-large"><textarea id="auth-description" type="text" name="description"><?php echo $auth_group['description']; ?></textarea></label>
+            </div>
+        </div>
+        <div class="form-item">
+            <?php if(isset($auth_group['id'])): ?><input type="hidden" name="id" value="<?php echo $auth_group['id']; ?>" /><?php endif; ?>
+            <button type="submit" class="btn submit-btn ajax-posts" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
 
         </div>
         <div class="cont-ft">
@@ -243,5 +221,10 @@
         }
     </script>
     
+<script type="text/javascript" charset="utf-8">
+    //导航高亮
+    highlight_subnav('<?php echo url('AuthManager/index'); ?>');
+</script>
+
 </body>
 </html>

@@ -1,0 +1,66 @@
+{extend name="public/base" /}
+
+<!-- 子导航 -->
+{block name="sidebar"}
+{include file="article/sidemenu" /}
+{/block}
+
+{block name="body"}
+<!-- 标题栏 -->
+<div class="main-title">
+    <h2>待审核({:count($list)})</h2>
+</div>
+
+<!--<div class="tools auth-botton">-->
+    <!--<button class="btn ajax-post confirm" target-form="ids" url="{:url("Article/setStatus",array("status"=>-1))}">删 除</button>-->
+    <!--<button url="{:url('article/setStatus?status=1')}" class="btn ajax-post" target-form="ids">审 核</button>-->
+<!--</div>-->
+
+<!-- 数据列表 -->
+<div class="data-table table-striped">
+    <table class="">
+        <thead>
+        <tr>
+            <!--<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>-->
+            <th>编号</th>
+            <th>认证用户</th>
+            <th>用户名</th>
+            <th>房号</th>
+            <th>与业主关系</th>
+            <th>联系电话</th>
+            <th>身份证</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="list"}
+        <tr>
+            <!--<td><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" /></td>-->
+            <td>{$list.id} </td>
+            <td>{$list.member_id}</td>
+            <td>{$list.name} </td>
+            <td>{$list.house}</td>
+            {if $list.relation==1}
+            <td>本人</td>
+            {/if}
+            {if $list.relation==2}
+            <td>家属</td>
+            {/if}
+            {if $list.relation==3}
+            <td>租客</td>
+            {/if}
+            <td>{$list.tel}</td>
+            <td>{$list.card_id}</td>
+            <td><a href="{:url('changestatus?id='.$list.id)}" class="btn btn-primary">通过审核</a>
+                <a href="{:url('Article/setStatus?status=-1&ids='.$vo['id'])}" class="btn btn-danger">删除</a>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+
+</div>
+<div class="page">
+    {$_page}
+</div>
+{/block}

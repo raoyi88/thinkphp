@@ -1,0 +1,49 @@
+{extend name="public/base" /}
+
+{block name="body"}
+<h2>编辑报修信息</h2>
+<form action="{:url('add')}" method="post" class="form-horizontal">
+    <div class="form-item">
+        <select name="category" style="width: 400px">
+            <option value="0">商家活动</option>
+            <option value="1">小区活动</option>
+        </select>
+    </div>
+    <div class="form-item">
+        <label class="item-label">活动简介<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="text" class="text input-large" name="title">
+        </div>
+    </div>
+    <input type="hidden" class="text input-large" name="id">
+    <div class="form-item">
+        <label class="item-label">活动内容<span class="check-tips"></span></label>
+        <div class="controls">
+            <textarea name="content" style="width: 395px" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">开始时间<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="date" class="text input-large" name="start_time">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">结束时间<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="date" class="text input-large" name="end_time">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">报名人数<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="number" name="num" style="width: 395px">
+        </div>
+    </div>
+    <div class="form-item">
+        <button class="btn submit-btn ajax-posts" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+        <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+    </div>
+</form>
+{/block}
+{/block}

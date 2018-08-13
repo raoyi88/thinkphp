@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:89:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/article\mydocument.html";i:1496373782;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;s:87:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/article\sidemenu.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:89:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/article\mydocument.html";i:1496373782;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;s:87:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/article\sidemenu.html";i:1533779970;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -78,7 +78,9 @@
  		<li <?php if(request()->action() == 'draftbox'): ?>class="current"<?php endif; ?>><a class="item" href="<?php echo url('article/draftbox'); ?>">草稿箱</a></li>
  		<?php endif; if($show_examine == '1'): ?>
 		<li <?php if(request()->action() == 'examine'): ?>class="examine"<?php endif; ?>><a class="item" href="<?php echo url('article/examine'); ?>">待审核</a></li>
-		<?php endif; ?>
+		<?php endif; if($show_examine == '1'): ?>
+        <li <?php if(request()->action() == 'examine'): ?>class="examine"<?php endif; ?>><a class="item" href="<?php echo url('repair/index'); ?>">报修</a></li>
+        <?php endif; ?>
  	</ul> 
     <?php if(is_array($nodes) || $nodes instanceof \think\Collection || $nodes instanceof \think\Paginator): $i = 0; $__LIST__ = $nodes;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$sub_menu): $mod = ($i % 2 );++$i;?>
         <!-- 子导航 -->

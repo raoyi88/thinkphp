@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:85:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/activity\index.html";i:1533957442;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:84:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/zushou\create.html";i:1534045659;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -100,52 +100,56 @@
             
 
             
-
-<div class="main-title">
-    <h2>活动管理</h2>
-</div>
-
-<div class="cf">
-    <a class="btn" href="<?php echo url('create'); ?>">新 增</a>
-    <button class="btn ajax-post confirm" url="<?php echo url('deleterepairs'); ?>" target-form="ids">删 除</button>
-</div>
-
-<div class="data-table table-striped">
-    <table>
-        <thead>
-        <tr>
-            <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-            <th>ID</th>
-            <th>活动标题</th>
-            <th>开始时间</th>
-            <th>结束时间</th>
-            <th>限制人数</th>
-            <th>状态</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if(!(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty()))): if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?>
-        <tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo $list['id']; ?>" /></td>
-            <td><?php echo $list['id']; ?></td>
-            <td><?php echo $list['title']; ?></td>
-            <td><?php echo date('Y-m-d',$list['start_time']); ?></td>
-            <td><?php echo date('Y-m-d',$list['end_time']); ?></td>
-            <td><?php echo $list['num']; ?></td>
-            <td><a href="<?php echo url('changestatus?id='.$list['id']); ?>"><?php echo isset($list['status']) ? $list['status'] : 0?"已发布":"未发布"; ?></a></td>
-            <td>
-                <a href="<?php echo url('show?id='.$list['id']); ?>">查看</a>
-                <a href="<?php echo url('edit?id='.$list['id']); ?>">编辑</a>
-                <a href="<?php echo url('destroy?id='.$list['id']); ?>">删除</a>
-            </td>
-        </tr>
-        <?php endforeach; endif; else: echo "" ;endif; else: ?>
-        <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
-        <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+<h2>添加租售信息</h2>
+<form action="<?php echo url('add'); ?>" method="post" class="form-horizontal" enctype="multipart/form-data">
+    <div class="form-item">
+        <label class="item-label">所属</label>
+        <select name="category" style="width: 400px">
+            <option value="0">出租</option>
+            <option value="1">出售</option>
+        </select>
+    </div>
+    <div class="form-item">
+        <label class="item-label">简介<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="text" class="text input-large" name="title">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">描述<span class="check-tips"></span></label>
+        <div class="controls">
+            <textarea name="content" style="width: 395px" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">图片</label>
+        <div class="controls">
+            <input type="file" name="img">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">价格<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="number" class="text input-large" name="price">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">联系人<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="text" name="name" class="text input-large">
+        </div>
+    </div>
+    <div class="form-item">
+        <label class="item-label">联系电话<span class="check-tips"></span></label>
+        <div class="controls">
+            <input type="tel" name="tel" class="text input-large">
+        </div>
+    </div>
+    <div class="form-item">
+        <button class="btn submit-btn ajax-posts" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+        <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+    </div>
+</form>
 
         </div>
         <div class="cont-ft">

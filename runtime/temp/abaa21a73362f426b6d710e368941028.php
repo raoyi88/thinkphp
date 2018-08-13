@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:85:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/activity\index.html";i:1533957442;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/zushou\show.html";i:1534041763;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -102,48 +102,25 @@
             
 
 <div class="main-title">
-    <h2>活动管理</h2>
+    <h2>活动详情</h2>
 </div>
-
-<div class="cf">
-    <a class="btn" href="<?php echo url('create'); ?>">新 增</a>
-    <button class="btn ajax-post confirm" url="<?php echo url('deleterepairs'); ?>" target-form="ids">删 除</button>
-</div>
-
 <div class="data-table table-striped">
     <table>
         <thead>
-        <tr>
-            <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-            <th>ID</th>
-            <th>活动标题</th>
-            <th>开始时间</th>
-            <th>结束时间</th>
-            <th>限制人数</th>
-            <th>状态</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if(!(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty()))): if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?>
-        <tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo $list['id']; ?>" /></td>
-            <td><?php echo $list['id']; ?></td>
-            <td><?php echo $list['title']; ?></td>
-            <td><?php echo date('Y-m-d',$list['start_time']); ?></td>
-            <td><?php echo date('Y-m-d',$list['end_time']); ?></td>
-            <td><?php echo $list['num']; ?></td>
-            <td><a href="<?php echo url('changestatus?id='.$list['id']); ?>"><?php echo isset($list['status']) ? $list['status'] : 0?"已发布":"未发布"; ?></a></td>
-            <td>
-                <a href="<?php echo url('show?id='.$list['id']); ?>">查看</a>
-                <a href="<?php echo url('edit?id='.$list['id']); ?>">编辑</a>
-                <a href="<?php echo url('destroy?id='.$list['id']); ?>">删除</a>
-            </td>
-        </tr>
-        <?php endforeach; endif; else: echo "" ;endif; else: ?>
-        <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
-        <?php endif; ?>
-        </tbody>
+        <tr><td><h3>ID</h3></td></tr>
+        <tr><td><?php echo $zushou['id']; ?></td></tr>
+        <tr><td><h3>简介</h3></td></tr>
+        <tr><td><?php echo $zushou['title']; ?></td></tr>
+        <tr><td><h3>价格</h3></td></tr>
+        <tr><td><?php echo $zushou['price']; ?></td></tr>
+        <tr><td><h3>描述</h3></td></tr>
+        <tr><td><?php echo $zushou['content']; ?></td></tr>
+        <tr><td><h3>联系人</h3></td></tr>
+        <tr><td><?php echo $zushou['name']; ?></td></tr>
+        <tr><td><h3>电话</h3></td></tr>
+        <tr><td><?php echo $zushou['tel']; ?></td></tr>
+        <tr><td><h3>创建时间</h3></td></tr>
+        <tr><td><?php echo date('Y-m-d',$zushou['create_time']); ?></td></tr>
     </table>
 </div>
 

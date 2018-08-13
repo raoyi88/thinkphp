@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:85:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/activity\index.html";i:1533957442;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/config\edit.html";i:1496373782;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -100,52 +100,79 @@
             
 
             
-
-<div class="main-title">
-    <h2>活动管理</h2>
-</div>
-
-<div class="cf">
-    <a class="btn" href="<?php echo url('create'); ?>">新 增</a>
-    <button class="btn ajax-post confirm" url="<?php echo url('deleterepairs'); ?>" target-form="ids">删 除</button>
-</div>
-
-<div class="data-table table-striped">
-    <table>
-        <thead>
-        <tr>
-            <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-            <th>ID</th>
-            <th>活动标题</th>
-            <th>开始时间</th>
-            <th>结束时间</th>
-            <th>限制人数</th>
-            <th>状态</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if(!(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty()))): if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?>
-        <tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo $list['id']; ?>" /></td>
-            <td><?php echo $list['id']; ?></td>
-            <td><?php echo $list['title']; ?></td>
-            <td><?php echo date('Y-m-d',$list['start_time']); ?></td>
-            <td><?php echo date('Y-m-d',$list['end_time']); ?></td>
-            <td><?php echo $list['num']; ?></td>
-            <td><a href="<?php echo url('changestatus?id='.$list['id']); ?>"><?php echo isset($list['status']) ? $list['status'] : 0?"已发布":"未发布"; ?></a></td>
-            <td>
-                <a href="<?php echo url('show?id='.$list['id']); ?>">查看</a>
-                <a href="<?php echo url('edit?id='.$list['id']); ?>">编辑</a>
-                <a href="<?php echo url('destroy?id='.$list['id']); ?>">删除</a>
-            </td>
-        </tr>
-        <?php endforeach; endif; else: echo "" ;endif; else: ?>
-        <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
-        <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+	<div class="main-title">
+		<h2><?php echo !empty($info['id'])?'编辑':'新增'; ?>配置</h2>
+	</div>
+	<form action="<?php echo url(); ?>" method="post" class="form-horizontal">
+		<div class="form-item">
+			<label class="item-label">配置标识<span class="check-tips">（用于C函数调用，只能使用英文且不能重复）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="name" value="<?php echo (isset($info['name']) && ($info['name'] !== '')?$info['name']:''); ?>">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">配置标题<span class="check-tips">（用于后台显示的配置标题）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="title" value="<?php echo (isset($info['title']) && ($info['title'] !== '')?$info['title']:''); ?>">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">排序<span class="check-tips">（用于分组显示的顺序）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-small" name="sort" value="<?php echo (isset($info['sort']) && ($info['sort'] !== '')?$info['sort']:0); ?>">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">配置类型<span class="check-tips">（系统会根据不同类型解析配置值）</span></label>
+			<div class="controls">
+				<select name="type">
+					<?php if(is_array(\think\Config::get('config_type_list')) || \think\Config::get('config_type_list') instanceof \think\Collection || \think\Config::get('config_type_list') instanceof \think\Paginator): $i = 0; $__LIST__ = \think\Config::get('config_type_list');if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$type): $mod = ($i % 2 );++$i;?> 
+						<option value="<?php echo $key; ?>"><?php echo $type; ?></option>
+					<?php endforeach; endif; else: echo "" ;endif; ?>
+				</select>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">配置分组<span class="check-tips">（配置分组 用于批量设置 不分组则不会显示在系统设置中）</span></label>
+			<div class="controls">
+				<select name="group">
+					<option value="0">不分组</option> 
+					<?php if(is_array(\think\Config::get('config_group_list')) || \think\Config::get('config_group_list') instanceof \think\Collection || \think\Config::get('config_group_list') instanceof \think\Paginator): $i = 0; $__LIST__ = \think\Config::get('config_group_list');if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$group): $mod = ($i % 2 );++$i;?>
+						<option value="<?php echo $key; ?>"><?php echo $group; ?></option>
+					<?php endforeach; endif; else: echo "" ;endif; ?>
+				</select>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">配置值<span class="check-tips">（配置值）</span></label>
+			<div class="controls">
+				<label class="textarea input-large">
+					<textarea name="value"><?php echo (isset($info['value']) && ($info['value'] !== '')?$info['value']:''); ?></textarea>
+				</label>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">配置项<span class="check-tips">（如果是枚举型 需要配置该项）</span></label>
+			<div class="controls">
+				<label class="textarea input-large">
+					<textarea name="extra"><?php echo (isset($info['extra']) && ($info['extra'] !== '')?$info['extra']:''); ?></textarea>
+				</label>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">说明<span class="check-tips">（配置详细说明）</span></label>
+			<div class="controls">
+				<label class="textarea input-large">
+					<textarea name="remark"><?php echo (isset($info['remark']) && ($info['remark'] !== '')?$info['remark']:''); ?></textarea>
+				</label>
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="id" value="<?php echo (isset($info['id']) && ($info['id'] !== '')?$info['id']:''); ?>">
+			<button class="btn submit-btn ajax-posts" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
 
         </div>
         <div class="cont-ft">
@@ -243,5 +270,12 @@
         }
     </script>
     
+	<script type="text/javascript">
+		Think.setValue("type", <?php echo (isset($info['type']) && ($info['type'] !== '')?$info['type']:0); ?>);
+		Think.setValue("group", <?php echo (isset($info['group']) && ($info['group'] !== '')?$info['group']:0); ?>);
+		//导航高亮
+		highlight_subnav('<?php echo url('Config/index'); ?>');
+	</script>
+
 </body>
 </html>

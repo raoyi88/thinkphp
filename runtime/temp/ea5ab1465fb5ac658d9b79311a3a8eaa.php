@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:85:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/activity\index.html";i:1533957442;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:86:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/addons\edithook.html";i:1496373782;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -100,52 +100,81 @@
             
 
             
+	<!-- 标题栏 -->
+	<div class="main-title cf">
+		<h2><?php if(isset($data)): ?>编辑<?php else: ?>新增<?php endif; ?>钩子</h2>
+	</div>
 
-<div class="main-title">
-    <h2>活动管理</h2>
-</div>
+	<!-- 修改密码表单 -->
+	<form action="<?php echo url('updateHook'); ?>" method="post" class="form-horizontal">
+		<div class="form-item cf">
+			<label class="item-label">钩子名称<span class="check-tips">（需要在程序中先添加钩子，否则无效）</span></label>
+			<div class="controls">
+				<input type="text" value="<?php echo $data['name']; ?>" name="name" class="text input-large">
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">钩子描述<span class="check-tips">（钩子的描述信息）</span></label>
+			<div class="controls">
+				<label class="textarea input-large"><textarea name="description" ><?php echo $data['description']; ?></textarea></label>
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">钩子类型<span class="check-tips">（区分钩子的主要用途）</span></label>
+			<div class="controls">
+				<select name="type">
+					<?php $_result=config('hooks_type');if(is_array($_result) || $_result instanceof \think\Collection || $_result instanceof \think\Paginator): $i = 0; $__LIST__ = $_result;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+						<option value="<?php echo $key; ?>" <?php if($data['type'] == $key): ?> selected<?php endif; ?>><?php echo $vo; ?></option>
+					<?php endforeach; endif; else: echo "" ;endif; ?>
+				</select>
+			</div>
+		</div>
+		<?php if(isset($data)): ?>
+			<div class="form-item cf">
+				<label class="item-label">钩子挂载的插件排序<span class="check-tips">（拖动后保存顺序，影响同一个钩子挂载的插件执行先后顺序）</span></label>
+				<div class="controls">
+					<input type="hidden" name="addons" value="<?php echo $data['addons']; ?>" readonly>
+					<?php if(empty($data['addons']) || (($data['addons'] instanceof \think\Collection || $data['addons'] instanceof \think\Paginator ) && $data['addons']->isEmpty())): ?>
+						暂无插件，无法排序
+					<?php else: ?>
+					<ul id="sortUl" class="dragsort">
+						<?php $_result=explode(',',$data['addons']);if(is_array($_result) || $_result instanceof \think\Collection || $_result instanceof \think\Paginator): $i = 0; $__LIST__ = $_result;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$addons_vo): $mod = ($i % 2 );++$i;?>
+							<li class="getSort"><b>&times;</b><em><?php echo $addons_vo; ?></em></li>
+						<?php endforeach; endif; else: echo "" ;endif; ?>
+					</ul>
+					<script type="text/javascript">
+						$(function(){
+							$("#sortUl").dragsort({
+	                            dragSelector:'li',
+	                            placeHolderTemplate: '<li class="draging-place">&nbsp;</li>',
+	                            dragEnd:function(){
+	                            	updateVal();
+	                            }
+	                        });
 
-<div class="cf">
-    <a class="btn" href="<?php echo url('create'); ?>">新 增</a>
-    <button class="btn ajax-post confirm" url="<?php echo url('deleterepairs'); ?>" target-form="ids">删 除</button>
-</div>
+							$('#sortUl li b').click(function(){
+                            	$(this).parent().remove();
+                            	updateVal();
+                            });
 
-<div class="data-table table-striped">
-    <table>
-        <thead>
-        <tr>
-            <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-            <th>ID</th>
-            <th>活动标题</th>
-            <th>开始时间</th>
-            <th>结束时间</th>
-            <th>限制人数</th>
-            <th>状态</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if(!(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty()))): if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?>
-        <tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo $list['id']; ?>" /></td>
-            <td><?php echo $list['id']; ?></td>
-            <td><?php echo $list['title']; ?></td>
-            <td><?php echo date('Y-m-d',$list['start_time']); ?></td>
-            <td><?php echo date('Y-m-d',$list['end_time']); ?></td>
-            <td><?php echo $list['num']; ?></td>
-            <td><a href="<?php echo url('changestatus?id='.$list['id']); ?>"><?php echo isset($list['status']) ? $list['status'] : 0?"已发布":"未发布"; ?></a></td>
-            <td>
-                <a href="<?php echo url('show?id='.$list['id']); ?>">查看</a>
-                <a href="<?php echo url('edit?id='.$list['id']); ?>">编辑</a>
-                <a href="<?php echo url('destroy?id='.$list['id']); ?>">删除</a>
-            </td>
-        </tr>
-        <?php endforeach; endif; else: echo "" ;endif; else: ?>
-        <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
-        <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+							// 更新排序后的隐藏域的值
+	                        function updateVal() {
+	                        	var sortVal = [];
+                            	$('#sortUl li').each(function(){
+                            		sortVal.push($('em',this).text());
+                            	});
+                                $("input[name='addons']").val(sortVal.join(','));
+	                        }
+						})
+					</script>
+					<?php endif; ?>
+				</div>
+			</div>
+		<?php endif; ?>
+		<input type="hidden" name="id" value="<?php echo $data['id']; ?>">
+		<button type="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+		<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+	</form>
 
         </div>
         <div class="cont-ft">
@@ -243,5 +272,15 @@
         }
     </script>
     
+	<present name="data">
+		<script type="text/javascript" src="__PUBLIC__/static/jquery.dragsort-0.5.1.min.js"></script>
+	</present>
+	<script type="text/javascript">
+		$(function(){
+			//导航高亮
+			highlight_subnav('<?php echo url('Addons/hooks'); ?>');
+		})
+	</script>
+
 </body>
 </html>

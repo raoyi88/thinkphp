@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:85:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/activity\index.html";i:1533957442;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:86:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/user\editaction.html";i:1496373782;s:82:"D:\phpStudy\WWW\thinkphp\public/../application/admin/view/default/public\base.html";i:1496373782;}*/ ?>
 <!doctype html>
 <html>
 <head>
@@ -100,52 +100,58 @@
             
 
             
+	<div class="main-title cf">
+		<h2><?php if(request()->action()  == 'addaction'): ?>新增<?php else: ?>编辑<?php endif; ?>行为</h2>
+	</div>
+	<!-- 表单 -->
+	<form id="form" action="<?php echo url('saveAction'); ?>" method="post" class="form-horizontal">
+		<div class="form-item cf">
+			<label class="item-label">行为标识<span class="check-tips">（输入行为标识 英文字母）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="name" value="<?php echo $data['name']; ?>">
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">行为名称<span class="check-tips">（输入行为名称）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="title" value="<?php echo $data['title']; ?>">
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">行为类型<span class="check-tips">（选择行为类型）</span></label>
+			<div class="controls">
+				<select name="type">
+					<?php $_result=get_action_type(null,true);if(is_array($_result) || $_result instanceof \think\Collection || $_result instanceof \think\Paginator): $i = 0; $__LIST__ = $_result;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+						<option value="<?php echo $key; ?>"><?php echo $vo; ?></option>
+					<?php endforeach; endif; else: echo "" ;endif; ?>
+				</select>
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">行为描述<span class="check-tips">（输入行为描述）</span></label>
+			<div class="controls">
+				<label class="textarea input-large"><textarea name="remark"><?php echo $data['remark']; ?></textarea></label>
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">行为规则<span class="check-tips">（输入行为规则，不写则只记录日志）</span></label>
+			<div class="controls">
+				<label class="textarea input-large"><textarea name="rule"><?php echo $data['rule']; ?></textarea></label>
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label">日志规则<span class="check-tips">（记录日志备注时按此规则来生成，支持[变量|函数]。目前变量有：user,time,model,record,data）</span></label>
+			<div class="controls">
+				<label class="textarea input-large"><textarea name="log"><?php echo $data['log']; ?></textarea></label>
+			</div>
+		</div>
 
-<div class="main-title">
-    <h2>活动管理</h2>
-</div>
-
-<div class="cf">
-    <a class="btn" href="<?php echo url('create'); ?>">新 增</a>
-    <button class="btn ajax-post confirm" url="<?php echo url('deleterepairs'); ?>" target-form="ids">删 除</button>
-</div>
-
-<div class="data-table table-striped">
-    <table>
-        <thead>
-        <tr>
-            <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-            <th>ID</th>
-            <th>活动标题</th>
-            <th>开始时间</th>
-            <th>结束时间</th>
-            <th>限制人数</th>
-            <th>状态</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if(!(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty()))): if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$list): $mod = ($i % 2 );++$i;?>
-        <tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo $list['id']; ?>" /></td>
-            <td><?php echo $list['id']; ?></td>
-            <td><?php echo $list['title']; ?></td>
-            <td><?php echo date('Y-m-d',$list['start_time']); ?></td>
-            <td><?php echo date('Y-m-d',$list['end_time']); ?></td>
-            <td><?php echo $list['num']; ?></td>
-            <td><a href="<?php echo url('changestatus?id='.$list['id']); ?>"><?php echo isset($list['status']) ? $list['status'] : 0?"已发布":"未发布"; ?></a></td>
-            <td>
-                <a href="<?php echo url('show?id='.$list['id']); ?>">查看</a>
-                <a href="<?php echo url('edit?id='.$list['id']); ?>">编辑</a>
-                <a href="<?php echo url('destroy?id='.$list['id']); ?>">删除</a>
-            </td>
-        </tr>
-        <?php endforeach; endif; else: echo "" ;endif; else: ?>
-        <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
-        <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+		<div class="form-item">
+			<?php if(isset($data['id'])): ?><input type="hidden" name="id" value="<?php echo $data['id']; ?>"/><?php endif; ?>
+			<button type="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
 
         </div>
         <div class="cont-ft">
@@ -243,5 +249,12 @@
         }
     </script>
     
+<script type="text/javascript" src="__PUBLIC__/static/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+	Think.setValue('type',<?php echo (isset($data['type']) && ($data['type'] !== '')?$data['type']:1); ?>);
+    //导航高亮
+    highlight_subnav('<?php echo url('User/action'); ?>');
+</script>
+
 </body>
 </html>
